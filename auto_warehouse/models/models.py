@@ -23,9 +23,9 @@ class CountryState(models.Model):
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    @api.onchange('partner_shipping_id')
-    def _change_partner_shipping_id(self):
-
+    @api.onchange('partner_shipping_id', 'partner_id')
+    def onchange_partner_shipping_id(self):
+        result = super(SaleOrder, self).onchange_partner_shipping_id()
         Warehouse = self.env['stock.warehouse']
         
         for s in self:
@@ -38,3 +38,5 @@ class SaleOrder(models.Model):
                 wids = Warehouse.search([('state_ids.id', '=', partner['state_id'].id)])
                 if wids and len(wids.ids) > 0:
                     s['warehouse_id'] = wids[0]
+        
+        return result
