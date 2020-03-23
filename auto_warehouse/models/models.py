@@ -29,6 +29,6 @@ class SaleOrder(models.Model):
             partner = s['partner_shipping_id']
             if partner and partner['country_id']:
                 Warehouse = self.env['res.country']
-                wids = Warehouse.search(['country_ids.id', '=', partner['country_id']])
+                wids = Warehouse.search([('country_ids.id', '=', partner['country_id'])])
                 if wids and len(wids.ids) > 0:
                     s['warehouse_id'] = wids[0]
