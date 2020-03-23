@@ -15,10 +15,10 @@
     # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'Sales',
-    'version': '0.2',
+    'version': '0.3',
 
     # any module necessary for this one to work correctly
-    'depends': ['stock', 'account', 'sale_management', 'account_accountant', 'mrp', 'contacts', 'sale_stock', 'sale'],
+    'depends': ['base', 'stock', 'account', 'sale_management', 'account_accountant', 'mrp', 'contacts', 'sale_stock', 'sale'],
 
     # only loaded in demonstration mode
     'demo': [],
