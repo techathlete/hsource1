@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
+  <record id='auto_warehouse_country_tree_view' model='ir.ui.view'>
+    <field name="name">auto.warehouse.country.tree.inherit</field>
+    <field name="model">res.country</field>
+    <field name='arch' type='xml'>
+      <tree edit='true' editable='top'>
+        <field name='name'/>
+        <field name='code'/>
+        <field name='warehouse_id'/>
+      </tree>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="auto_warehouse_state_search_view">
+    <field name="name">auto.warehouse.state.search.view</field>
+    <field name="model">res.country.state</field>
+    <field name='inherit_id' ref='base.view_country_state_search'/>
+    <field name="arch" type="xml">
+      <field name='country_id' position='after'>
+        <filter name="usa" string="United States" domain="[('country_id.name', 'ilike', 'United States')]"/>
+      </field>
+    </field>
+  </record>
+
+  <record id='auto_warehouse_state_tree_view' model='ir.ui.view'>
+    <field name="name">auto.warehouse.state.tree.inherit</field>
+    <field name="model">res.country.state</field>
+    <field name='arch' type='xml'>
+      <tree edit='true' editable='top'>
+        <field name='name'/>
+        <field name='country_id'/>
+        <field name='warehouse_id'/>
+      </tree>
+    </field>
+  </record>
+
   <record id="action_auto_warehouse_country_tree" model="ir.actions.act_window">
     <field name="name">Countries</field>
     <field name="res_model">res.country</field>
@@ -50,41 +85,6 @@
       <field name='partner_shipping_id' position='after'>
         <field name='warehouse_id'/>
       </field>
-    </field>
-  </record>
-
-  <record id='auto_warehouse_country_tree_view' model='ir.ui.view'>
-    <field name="name">auto.warehouse.country.tree.inherit</field>
-    <field name="model">res.country</field>
-    <field name='arch' type='xml'>
-      <tree edit='true' editable='top'>
-        <field name='name'/>
-        <field name='code'/>
-        <field name='warehouse_id'/>
-      </tree>
-    </field>
-  </record>
-
-  <record model="ir.ui.view" id="auto_warehouse_state_search_view">
-    <field name="name">auto.warehouse.state.search.view</field>
-    <field name="model">res.country.state</field>
-    <field name='inherit_id' ref='base.view_country_state_search'/>
-    <field name="arch" type="xml">
-      <field name='country_id' position='after'>
-        <filter name="usa" string="United States" domain="[('country_id.name', 'ilike', 'United States')]"/>
-      </field>
-    </field>
-  </record>
-
-  <record id='auto_warehouse_state_tree_view' model='ir.ui.view'>
-    <field name="name">auto.warehouse.state.tree.inherit</field>
-    <field name="model">res.country.state</field>
-    <field name='arch' type='xml'>
-      <tree edit='true' editable='top'>
-        <field name='name'/>
-        <field name='country_id'/>
-        <field name='warehouse_id'/>
-      </tree>
     </field>
   </record>
 </odoo>
