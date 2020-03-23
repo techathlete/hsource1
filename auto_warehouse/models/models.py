@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api
 
+_logger = logging.getLogger(__name__)
 
 class Warehouse(models.Model):
     _inherit = 'stock.warehouse'
@@ -30,13 +31,19 @@ class SaleOrder(models.Model):
         
         for s in self:
             partner = s['partner_shipping_id']
+            
             if partner and partner['country_id'] and partner['country_id']['name'] != 'United States':
+                _logger.info('country: {}'.format(partner['country_id']['name']))
                 wids = Warehouse.search([('country_ids.id', '=', partner['country_id'].id)])
                 if wids and len(wids.ids) > 0:
+                    _logger.info('warehouse: {}'.format(wids[0]))
                     s['warehouse_id'] = wids[0]
-            else:
+            
+            elif partner and partner['country_id']:
+                _logger.info('country: {}'.format(partner['country_id']['name']))
                 wids = Warehouse.search([('state_ids.id', '=', partner['state_id'].id)])
                 if wids and len(wids.ids) > 0:
+                    _logger.info('warehouse: {}'.format(wids[0]))
                     s['warehouse_id'] = wids[0]
         
         return result
