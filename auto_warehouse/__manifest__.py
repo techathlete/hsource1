@@ -18,7 +18,7 @@
     'version': '0.2',
 
     # any module necessary for this one to work correctly
-    'depends': ['stock', 'account', 'sale_management', 'account_accountant', 'mrp', 'contacts'],
+    'depends': ['stock', 'account', 'sale_management', 'account_accountant', 'mrp', 'contacts', 'sale_stock', 'sale'],
 
     # only loaded in demonstration mode
     'demo': [],
