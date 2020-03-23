@@ -25,10 +25,16 @@ class SaleOrder(models.Model):
 
     @api.onchange('partner_shipping_id')
     def _change_partner_shipping_id(self):
+
+        Warehouse = self.env['stock.warehouse']
+        
         for s in self:
             partner = s['partner_shipping_id']
-            if partner and partner['country_id']:
-                Warehouse = self.env['stock.warehouse']
+            if partner and partner['country_id'] and partner['country_id']['name'] != 'United States':
                 wids = Warehouse.search([('country_ids.id', '=', partner['country_id'].id)])
+                if wids and len(wids.ids) > 0:
+                    s['warehouse_id'] = wids[0]
+            else:
+                wids = Warehouse.search([('state_ids.id', '=', partner['state_id'].id)])
                 if wids and len(wids.ids) > 0:
                     s['warehouse_id'] = wids[0]
