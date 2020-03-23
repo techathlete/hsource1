@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="action_auto_warehouse_country_tree" model="ir.actions.act_window">
+    <field name="name">Countries</field>
+    <field name="res_model">res.country</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="view_id" ref="auto_warehouse_country_tree_view"/>
+  </record>
+
+  <record id="action_auto_warehouse_state_tree" model="ir.actions.act_window">
+    <field name="name">Fed. States</field>
+    <field name="res_model">res.country.state</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="context">{'search_default_usa': 1}</field>
+    <field name="view_id" ref="auto_warehouse_state_tree_view"/>
+  </record>
+
+  <menuitem name="Countries"
+            id="menu_action_auto_warehouse_country_tree"
+            parent="stock.menu_warehouse_config" 
+            action="action_auto_warehouse_country_tree"/>
+
+  <menuitem name="Fed. States"
+            id="menu_action_auto_warehouse_state_tree"
+            parent="stock.menu_warehouse_config" 
+            action="action_auto_warehouse_state_tree"/>
+
+  <record id='auto_warehouse_form_inherit_warehouse_form' model='ir.ui.view'>
+    <field name="name">auto.warehouse.stock.warehouse.form</field>
+    <field name="model">stock.warehouse</field>
+    <field name="inherit_id" ref="stock.view_warehouse"/>
+    <field name='arch' type='xml'>
+      <xpath expr='//page[2]' position='after'>
+          <page name='service_areas' string='Service Areas'>
+            <group>
+              <field name='country_ids' widget='many2many_tags'/>
+              <field name='state_ids'  widget='many2many_tags'/>
+            </group>
+          </page>
+      </xpath>
+    </field>
+  </record>
+
+  <record id='auto_warehouse_form_inherit_sales_order_form' model='ir.ui.view'>
+    <field name="name">auto.warehouse.sales.order.form</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form"/>
+    <field name='arch' type='xml'>
+      <field name='partner_shipping_id' position='after'>
+        <field name='warehouse_id'/>
+      </field>
+    </field>
+  </record>
+
+  <record id='auto_warehouse_country_tree_view' model='ir.ui.view'>
+    <field name="name">auto.warehouse.country.tree.inherit</field>
+    <field name="model">res.country</field>
+    <field name='arch' type='xml'>
+      <tree edit='true' editable='top'>
+        <field name='name'/>
+        <field name='code'/>
+        <field name='warehouse_id'/>
+      </tree>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="auto_warehouse_state_search_view">
+    <field name="name">auto.warehouse.state.search.view</field>
+    <field name="model">res.country.state</field>
+    <field name='inherit_id' ref='base.view_country_state_search'/>
+    <field name="arch" type="xml">
+      <field name='country_id' position='after'>
+        <filter name="usa" string="United States" domain="[('country_id.name', 'ilike', 'United States')]"/>
+      </field>
+    </field>
+  </record>
+
+  <record id='auto_warehouse_state_tree_view' model='ir.ui.view'>
+    <field name="name">auto.warehouse.state.tree.inherit</field>
+    <field name="model">res.country.state</field>
+    <field name='arch' type='xml'>
+      <tree edit='true' editable='top'>
+        <field name='name'/>
+        <field name='country_id'/>
+        <field name='warehouse_id'/>
+      </tree>
+    </field>
+  </record>
+</odoo>
