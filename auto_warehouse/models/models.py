@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-import logging
 
 from odoo import models, fields, api
-
-_logger = logging.getLogger(__name__)
 
 class Warehouse(models.Model):
     _inherit = 'stock.warehouse'
@@ -30,21 +27,18 @@ class SaleOrder(models.Model):
         result = super(SaleOrder, self).onchange_partner_shipping_id()
         Warehouse = self.env['stock.warehouse']
         
-        for s in self:
-            partner = s['partner_shipping_id']
+        for s in self.filtered(lambda x: x.partner_shipping_id and x.partner_shipping_id.country_id):
+            partner = s.partner_shipping_id
             
-            if partner and partner['country_id'] and partner['country_id']['name'] != 'United States':
-                _logger.info('country: {}'.format(partner['country_id']['name']))
-                wids = Warehouse.search([('country_ids.id', '=', partner['country_id'].id)])
-                if wids and len(wids.ids) > 0:
-                    _logger.info('warehouse: {}'.format(wids[0]))
-                    s['warehouse_id'] = wids[0]
-            
-            elif partner and partner['country_id']:
-                _logger.info('country: {}'.format(partner['country_id']['name']))
+            # if country_id is present and state_id is present AND state_id has a warehouse            
+            if partner['state_id']:
                 wids = Warehouse.search([('state_ids.id', '=', partner['state_id'].id)])
                 if wids and len(wids.ids) > 0:
-                    _logger.info('warehouse: {}'.format(wids[0]))
                     s['warehouse_id'] = wids[0]
         
+            else:
+                wids = Warehouse.search([('country_ids.id', '=', partner['country_id'].id)])
+                if wids and len(wids.ids) > 0:
+                    s['warehouse_id'] = wids[0]
+
         return result
