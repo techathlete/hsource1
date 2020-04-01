@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="view_website_form_inherit_hsource_captcha" model="ir.ui.view">
+            <field name="name">view.website.form.inherit.hsource.captcha</field>
+            <field name="model">website</field>
+            <field name="inherit_id" ref="website.view_website_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='domain']" position="after">
+		  <div name="captcha">
+		    <group name="captcha">
+		      <field name="grecaptcha_enabled"/>
+		      <field name="grecaptcha_site_key"/>
+		      <field name="grecaptcha_secret_key"/>
+		      <field name="grecaptcha_threshold"/>
+		    </group>
+		  </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

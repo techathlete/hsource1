@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="res_config_settings_view_form_website_inherit_hsource_captcha" model="ir.ui.view">
+    <field name="name">res.config.settings.view.form.website.inherit.hsource.captcha</field>
+    <field name="model">res.config.settings</field>
+    <field name="priority" eval="25"/>
+    <field name="inherit_id" ref="website.res_config_settings_view_form"/>
+    <field name="arch" type="xml">
+
+      <xpath expr="//div[@id='domain_setting']/.." position="inside">
+	<div class="col-12 col-lg-6 o_setting_box" id="grecaptcha">
+	  <div class="o_setting_left_pane">
+	    <field name="grecaptcha_enabled"/>
+	  </div>
+	  <div class="o_setting_right_pane">
+	    <label for="grecaptcha_enabled" string="Google ReCaptcha"/>
+	    <span class="fa fa-lg fa-globe" title="Values set here are website-specific." groups="website.group_multi_website"/>
+	    <div class="text-muted">
+	      Google ReCaptcha of your website
+	    </div>
+	    <div class="content-group">
+	      <div class="row">
+		<label class="col-lg-3 o_light_label" for="grecaptcha_site_key" />
+		<field name="grecaptcha_site_key"/>
+	      </div>
+	      <div class="row">
+		<label class="col-lg-3 o_light_label" for="grecaptcha_secret_key" />
+		<field name="grecaptcha_secret_key"/>
+	      </div>
+	      <div class="row">
+		<label class="col-lg-3 o_light_label" for="grecaptcha_threshold" />
+		<field name="grecaptcha_threshold"/>
+	      </div>
+
+	      <div class="row" attrs="{'invisible': ['|', ('grecaptcha_enabled', '=', False), ('grecaptcha_site_key', '=', False)]}">
+		<label class="col-lg-3 o_light_label" for="grecaptcha_snippet"/>
+		<field name="grecaptcha_snippet"/>
+	      </div>
+
+	    </div>
+	  </div>
+	</div>
+      </xpath>
+    </field>
+  </record>
+</odoo>

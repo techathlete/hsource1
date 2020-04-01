@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="fields" inherit_id="auth_signup.fields">
+    <xpath expr="." position="inside">
+	  <div class="form-group" t-if="website.grecaptcha_enabled and website.grecaptcha_site_key">
+	    <t t-set="grecaptcha_site_key" t-value="website.grecaptcha_site_key"/>
+	    <input id="site_key" t-att-value="grecaptcha_site_key" type="hidden"/>
+	    <script t-att-src="'https://www.google.com/recaptcha/api.js?render=' + grecaptcha_site_key"></script>
+	    <script>
+	      grecaptcha.ready(function() {
+	      grecaptcha.execute(document.getElementById('site_key').value).then(function(token) {
+	      let input = document.getElementById('grecaptcha');
+	      input.value = token;
+	      });
+	      });
+	    </script>
+	    <input class="form-control" id="grecaptcha" name="grecaptcha" type="hidden"/>
+	  </div>
+    </xpath>
+  </template>
+
+</odoo>
