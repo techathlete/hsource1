@@ -31,10 +31,10 @@ class SaleOrder(models.Model):
 
         if (credit - debit + to_be_invoiced + self.amount_total) > partner.credit_limit:
             if not partner.over_credit:
-                msg = '%s has a Credit Limit of %s.\n\n ' \
-                      'Value of this Order: %s.\n' \
-                      'Credit Used from prior Orders: %s. **\n '\
-                      'Prior Orders yet to be Invoiced: %s.\n\n' \
+                msg = '%s has a Credit Limit of %s.' \
+                      '\n\nValue of this Order: %s.\n' \
+                      'Credit Used from prior Orders: %s. **'\
+                      '\nPrior Orders yet to be Invoiced: %s.\n\n' \
                       'No further Orders can be placed unless the Credit Limit is increased or relaxed. \n\n' \
                       '** Open Invoices minus Open Credits minus Unapplied Payments.' \
                       % (partner.name,'${:,.2f}'.format(partner.credit_limit),'${:,.2f}'.format(self.amount_total), '${:,.2f}'.format(credit-debit),'${:,.2f}'.format(to_be_invoiced))
