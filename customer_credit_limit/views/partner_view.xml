@@ -7,7 +7,7 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="account.view_partner_property_form"/>
         <field name="arch" type="xml">
-            <group name="acc_sale" position="after">
+            <group name="sale" position="after">
                <group string="Credit">
                 <field name="credit_limit" string="Limit"/>
                 <field name="over_credit"/>
