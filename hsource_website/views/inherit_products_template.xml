@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="inherit_product_hsource" inherit_id="website_sale.products">
-        <xpath expr="//div[@id='products_grid']//tbody/tr/t/t/td" position="replace">
+        <td t-att-colspan="td_product['x'] != 1 and td_product['x']" position="replace">
             <t t-set="combination_info" t-value="product._get_combination_info(only_template=True, add_qty=add_qty or 1, pricelist=pricelist)"/>
             <t t-if="combination_info['price'] and combination_info['price'] > 0">
                 <td t-att-colspan="td_product['x'] != 1 and td_product['x']"
@@ -14,6 +14,6 @@
                     </div>
                 </td>
             </t>
-        </xpath>
+        </td>
     </template>
 </odoo>
