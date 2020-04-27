@@ -25,7 +25,5 @@ Products are assigned to one of three Pricelists: Consumer, Hosptial, Government
     'depends': ['website_sale'],
 
     # always loaded
-    'data': [
-        'views/inherit_products_template.xml'
-    ],
+    'data': [],
 }
