@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <menuitem name="Vendor Products"
+              id="menu_vendor_products_root"
+              parent="purchase.menu_purchase_root"
+              sequence="90"
+    />
+
+
+    <menuitem name="Pharmaceuticals"
+              id="menu_pharma_products"
+              parent="menu_vendor_products_root"
+              sequence="30"
+              action="vendor_pharma_action"
+    />
+
+    <menuitem name="Medical/Surgical Supplies"
+              id="menu_medical_products"
+              parent="menu_vendor_products_root"
+              sequence="20"
+              action="vendor_medical_action"
+    />
+
+    <menuitem name="Capital Equipment"
+              id="menu_capital_products"
+              parent="menu_vendor_products_root"
+              sequence="10"
+              action="vendor_capital_action"
+    />
+
+<!--
+    <menuitem name="Products"
+              id="menu_vendor_products"
+              parent="menu_vendor_products_root"
+              sequence="13"
+              action="vendor_product_action"
+    />
+-->
+
+    <menuitem name="Locations"
+              id="menu_vendor_locations"
+              parent="menu_vendor_products_root"
+              sequence="70"
+              action="vendor_location_action"
+    />
+
+    <menuitem name="Inventory"
+              id="menu_vendor_inventory"
+              parent="menu_vendor_products_root"
+              sequence="69"
+              action="vendor_quant_action"
+    />
+
+    <menuitem name="Pharmaceutical Import"
+              id="menu_pharma_products_import"
+              parent="menu_vendor_products_root"
+              sequence="130"
+              action="vendor_pharma_import_action"
+    />
+
+    <menuitem name="Medical/Surgical Supplies Import"
+              id="menu_medical_products_import"
+              parent="menu_vendor_products_root"
+              sequence="120"
+              action="vendor_medical_import_action"
+    />
+
+    <menuitem name="Capital Equipment Import"
+              id="menu_capital_products_import"
+              parent="menu_vendor_products_root"
+              sequence="110"
+              action="vendor_capital_import_action"
+    />
+
+</odoo>

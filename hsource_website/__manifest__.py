@@ -26,4 +26,5 @@ Products are assigned to one of three Pricelists: Consumer, Hosptial, Government
 
     # always loaded
     'data': [],
+
 }
