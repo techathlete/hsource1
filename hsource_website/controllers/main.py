@@ -22,6 +22,7 @@ from odoo.osv import expression
 _logger = logging.getLogger(__name__)
 
 class WebsiteSale(WebsiteSale):
+
     def sitemap_shop(env, rule, qs):
         return super(WebsiteSale,).sitemap_shop(env, rule, qs)
 
@@ -56,7 +57,7 @@ class WebsiteSale(WebsiteSale):
         attrib_values = [[int(x) for x in v.split("-")] for v in attrib_list if v]
         attributes_ids = {v[0] for v in attrib_values}
         attrib_set = {v[1] for v in attrib_values}
-
+        
         domain = self._get_search_domain(search, category, attrib_values)
 
         keep = QueryURL('/shop', category=category and int(category), search=search, attrib=attrib_list, order=post.get('order'))
@@ -74,6 +75,7 @@ class WebsiteSale(WebsiteSale):
         Product = request.env['product.template'].with_context(bin_size=True)
 
         search_product = Product.search(domain)
+
         website_domain = request.website.website_domain()
         categs_domain = [('parent_id', '=', False)] + website_domain
         if search:
@@ -85,7 +87,6 @@ class WebsiteSale(WebsiteSale):
 
         if category:
             url = "/shop/category/%s" % slug(category)
-
         product_count = len(search_product)
         pager = request.website.pager(url=url, total=product_count, page=page, step=ppg, scope=7, url_args=post)
         products = Product.search(domain, limit=ppg, offset=pager['offset'], order=self._get_search_order(post))
@@ -103,8 +104,9 @@ class WebsiteSale(WebsiteSale):
                 layout_mode = 'list'
             else:
                 layout_mode = 'grid'
-        avail_products = products.filtered(lambda prod: prod.price > 0)
         
+        prod = products.filtered(lambda prod: prod.price > 0)
+
         # import pudb
         # pu.db
         values = {
@@ -115,9 +117,9 @@ class WebsiteSale(WebsiteSale):
             'pager': pager,
             'pricelist': pricelist,
             'add_qty': add_qty,
-            'products': avail_products,
+            'products': prod,
             'search_count': product_count,  # common for all searchbox
-            'bins': TableCompute().process(avail_products, ppg, ppr),
+            'bins': TableCompute().process(prod, ppg, ppr),
             'ppg': ppg,
             'ppr': ppr,
             'categories': categs,
